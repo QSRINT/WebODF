@@ -1,3 +1,6 @@
+# Additional fixes (NVivo)
+* Cherry-pick: Fix chrome selections that cannot be collapsd by clicking inside them ([#905](https://github.com/kogmbh/WebODF/issues/905))
+
 # Changes between 0.5.2 and 0.5.3
 
 ## WebODF
