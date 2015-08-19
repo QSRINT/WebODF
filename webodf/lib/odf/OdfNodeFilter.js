@@ -40,7 +40,7 @@ odf.OdfNodeFilter = function OdfNodeFilter() {
         var result;
         if (node.namespaceURI === "http://www.w3.org/1999/xhtml") {
             result = NodeFilter.FILTER_SKIP;
-        } else if (node.namespaceURI && node.namespaceURI.match(/^urn:webodf:/)) {
+        } else if (node.namespaceURI && node.namespaceURI.match(/^(urn:webodf:|urn:qsr:internal:)/)) {
             // skip all webodf nodes incl. child nodes
             result = NodeFilter.FILTER_REJECT;
         } else {
