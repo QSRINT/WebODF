@@ -443,13 +443,32 @@
         };
 
         /**
+         * Sets the zoom level of the document and maintains the top left position
          * @param {!number} zoomLevel
          * @return {undefined}
          */
         this.setZoomLevel = function (zoomLevel) {
             if (zoomableElement) {
+                var scrollRatios = [];
+                var currentOffsetParent = offsetParent;
+                // Save the scroll ratios and related parent
+                while (currentOffsetParent) {
+                    scrollRatios.push({
+                        container: currentOffsetParent,
+                        scrollTop: currentOffsetParent.scrollTop / zoom,
+                        scrollLeft: currentOffsetParent.scrollLeft / zoom
+                    });
+                    currentOffsetParent = currentOffsetParent.offsetParent;
+                }
+
                 zoom = zoomLevel;
                 applyDetailedTransform();
+
+                // Restore the scroll ratios
+                scrollRatios.forEach(function(savedRatio) {
+                    savedRatio.container.scrollTop = savedRatio.scrollTop * zoom;
+                    savedRatio.container.scrollLeft = savedRatio.scrollLeft * zoom;
+                });
                 events.emit(gui.ZoomHelper.signalZoomChanged, zoom);
             }
         };
