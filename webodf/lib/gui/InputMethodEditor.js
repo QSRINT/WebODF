@@ -221,23 +221,30 @@
          * @param {!CompositionEvent} e
          */
         function compositionEnd(e) {
-            lastCompositionData = e.data;
-            addCompositionData(e.data);
+            compositionEndWithData(e.data);
         }
 
         /**
          * @param {!Text} e
          */
         function textInput(e) {
-            if (e.data !== lastCompositionData) {
-                // Chrome/Safari fire a compositionend event with data & a textInput event with data
-                // Firefox only fires a compositionend event with data (textInput is not supported)
-                // Chrome linux IME fires a compositionend event with no data, and a textInput event with data
-                addCompositionData(e.data);
-            }
-            lastCompositionData = undefined;
+            compositionEndWithData(e.data);
         }
 
+        /**
+         * in some cases, both composition and textinput events are received
+         * but the order is undermined on different browser,
+         * in some other cases, only one of them are received.
+         * However we only deal with it once
+         * @param {string} data
+         */
+        function compositionEndWithData(data) {
+            if(lastCompositionData === undefined)
+            {
+                lastCompositionData = data;
+                addCompositionData(data);
+            }
+        }
         /**
          * Synchronizes the eventTrap's text with
          * the compositionElement's text.
