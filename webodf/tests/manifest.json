@@ -120,6 +120,10 @@
         "ops.OpSplitParagraph",
         "ops.Operation"
     ],
+    "gui.ZoomHelperTests": [
+        "core.UnitTester",
+        "gui.ZoomHelper"
+    ],
     "odf.FormattingTests": [
         "core.CSSUnits",
         "core.UnitTester",
